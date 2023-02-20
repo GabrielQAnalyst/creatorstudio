@@ -1,0 +1,16 @@
+library(openxlsx)
+library(plyr)
+library(stringr)
+
+# the name and location of the files are the only variable to be changed here. you can name the source file however you like, but is must be on the main folder of R
+igstories = read.csv("igstories.csv")
+igstories$Publish.time = format(as.Date(igstories$Publish.time, '%m/%d/%Y'), '%d/%m/%Y')
+igstories = subset(igstories, select=c(Description, Post.ID, Publish.time, Impressions, Reach, Shares, Follows, Profile.visits, Replies, Link.clicks, Product.button.clicks, Sticker.taps))
+
+instagram = read.csv("instagram.csv")
+instagram$Publish.time = format(as.Date(instagram$Publish.time, '%m/%d/%Y'), '%d/%m/%Y')
+instagram = subset(instagram, select=c(Publish.time, Permalink, Description, Post.type, Reach, Impressions, Likes, Comments, Shares, Views, Saves))
+
+#Choose the name of the file and write it on CSV. 
+write.csv(igstories, "new_stories.csv")
+write.csv(instagram, "new_instagram.csv")
